@@ -1,0 +1,61 @@
+[project]
+name = "haunted-repo"
+version = "0.1.0"
+description = "Find and exorcise dead code, flaky tests, and cursed dependencies in abandoned Python repos"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.11"
+authors = [
+    {name = "Arthi Arumugam", email = "arthi@example.com"},
+]
+keywords = ["dead-code", "flaky-tests", "dependencies", "code-analysis", "kiroween"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+    "fastapi>=0.109.0",
+    "uvicorn[standard]>=0.27.0",
+    "jinja2>=3.1.0",
+    "httpx>=0.26.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-randomly>=3.15.0",
+    "pytest-repeat>=0.9.3",
+    "pytest-cov>=4.1.0",
+    "ruff>=0.2.0",
+    "bandit>=1.7.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/arthi-arumugam-git/haunted-repo"
+Repository = "https://github.com/arthi-arumugam-git/haunted-repo"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["haunted", "web"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP", "B", "C4", "SIM"]
+ignore = ["E501"]
+
+[tool.bandit]
+exclude_dirs = ["tests"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v"

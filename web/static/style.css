@@ -1,0 +1,171 @@
+:root {
+    --bg-dark: #1a1a2e;
+    --bg-card: #16213e;
+    --text-primary: #e4e4e4;
+    --text-muted: #8b8b8b;
+    --accent-purple: #7b2cbf;
+    --accent-green: #2d6a4f;
+    --accent-red: #9d0208;
+    --accent-orange: #e85d04;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    text-align: center;
+    padding: 2rem;
+    background: linear-gradient(180deg, #0f0f23 0%, var(--bg-dark) 100%);
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: var(--accent-purple);
+    text-shadow: 0 0 10px rgba(123, 44, 191, 0.5);
+}
+
+header .tagline {
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+}
+
+main {
+    flex: 1;
+    padding: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.graveyard h2 {
+    margin-bottom: 1rem;
+}
+
+.repo-url {
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+.repo-url code {
+    color: var(--accent-purple);
+}
+
+.notice {
+    background: var(--bg-card);
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    border-left: 3px solid var(--accent-orange);
+    margin-bottom: 1.5rem;
+}
+
+.analyze-form {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.analyze-form input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--text-muted);
+    border-radius: 4px;
+    background: var(--bg-card);
+    color: var(--text-primary);
+}
+
+.analyze-form button {
+    padding: 0.75rem 1.5rem;
+    background: var(--accent-purple);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.analyze-form button:hover {
+    background: #9d4edd;
+}
+
+.findings {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.findings section {
+    background: var(--bg-card);
+    padding: 1.5rem;
+    border-radius: 8px;
+}
+
+.findings h3 {
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--text-muted);
+}
+
+.tombstones h3 { color: var(--accent-green); }
+.ghosts h3 { color: var(--accent-purple); }
+.skulls h3 { color: var(--accent-red); }
+
+.findings ul {
+    list-style: none;
+}
+
+.findings li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(139, 139, 139, 0.2);
+}
+
+.findings li:last-child {
+    border-bottom: none;
+}
+
+.findings .icon {
+    font-size: 1.5rem;
+}
+
+.findings .name {
+    font-weight: 500;
+}
+
+.findings .detail {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    margin-left: auto;
+}
+
+.empty {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+footer a {
+    color: var(--accent-purple);
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}

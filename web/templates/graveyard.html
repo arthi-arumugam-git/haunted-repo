@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Graveyard | Haunted Repo{% endblock %}
+
+{% block content %}
+<section class="graveyard">
+    <h2>Repository Graveyard</h2>
+    <p class="repo-url">Analyzing: <code>{{ repo_url }}</code></p>
+    {% if status == "sample" %}
+    <p class="notice">Showing sample data. Submit a repository URL to analyze.</p>
+    {% endif %}
+
+    <form class="analyze-form" action="/api/analyze" method="get">
+        <input type="url" name="repo_url" placeholder="https://github.com/owner/repo" required>
+        <button type="submit">Analyze</button>
+    </form>
+
+    <div class="findings">
+        <section class="tombstones">
+            <h3>Zombies (Dead Code)</h3>
+            {% if zombies %}
+            <ul>
+                {% for z in zombies %}
+                <li class="tombstone">
+                    <span class="icon">🪦</span>
+                    <span class="name">{{ z.name }}</span>
+                    <span class="detail">{{ z.lines }} lines | {{ z.reason }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="empty">No zombies found.</p>
+            {% endif %}
+        </section>
+
+        <section class="ghosts">
+            <h3>Poltergeists (Flaky Tests)</h3>
+            {% if poltergeists %}
+            <ul>
+                {% for p in poltergeists %}
+                <li class="ghost">
+                    <span class="icon">👻</span>
+                    <span class="name">{{ p.name }}</span>
+                    <span class="detail">Flipped {{ p.flips }}/{{ p.runs }} runs</span>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="empty">No poltergeists found.</p>
+            {% endif %}
+        </section>
+
+        <section class="skulls">
+            <h3>Cursed Dependencies</h3>
+            {% if cursed %}
+            <ul>
+                {% for c in cursed %}
+                <li class="skull">
+                    <span class="icon">💀</span>
+                    <span class="name">{{ c.name }} {{ c.version }}</span>
+                    <span class="detail">{{ c.issue }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="empty">No cursed dependencies found.</p>
+            {% endif %}
+        </section>
+    </div>
+</section>
+{% endblock %}
