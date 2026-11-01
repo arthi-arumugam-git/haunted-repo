@@ -54,6 +54,7 @@ def _run_once(root: Path, order: list[str]) -> dict[str, str]:
 
 def hunt(root: Path, runs: int = 5, seed: int | None = None) -> FlakeResult:
     """Rerun the suite `runs` times, each in a shuffled order; flag tests whose outcome changes."""
+    root = Path(root).resolve()
     tests = collect(root)
     rng = random.Random(seed)
     result = FlakeResult(runs=runs)
