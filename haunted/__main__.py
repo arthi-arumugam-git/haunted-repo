@@ -1,4 +1,4 @@
-"""CLI: python -m haunted scan <path> [-o plan.md] [--flaky-runs N] [--no-osv]"""
+"""CLI: python -m haunted scan <path> [-o plan.md] [--flaky-runs N] [--no-osv] [--html PATH]"""
 from __future__ import annotations
 
 import argparse
@@ -9,6 +9,7 @@ from haunted.analyzer import scan
 from haunted.flake import hunt
 from haunted.osv import audit
 from haunted.planner import render_plan
+from haunted.web import render_html
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -19,6 +20,7 @@ def main(argv: list[str] | None = None) -> int:
     sp.add_argument("-o", "--output", help="write the plan to this file")
     sp.add_argument("--flaky-runs", type=int, default=0, help="rerun the test suite N times in shuffled order (0 = skip)")
     sp.add_argument("--no-osv", action="store_true", help="skip the OSV vulnerability lookup for pinned deps")
+    sp.add_argument("--html", metavar="PATH", help="also write a self-contained HTML graveyard page to PATH")
     args = ap.parse_args(argv)
     root = Path(args.path)
     if not root.is_dir():
@@ -31,7 +33,10 @@ def main(argv: list[str] | None = None) -> int:
             cursed = audit(root)
         except (OSError, ValueError) as e:
             print(f"OSV lookup failed, skipping dependency audit: {e}", file=sys.stderr)
-    plan = render_plan(root.name, scan(root), flakes, cursed)
+    result = scan(root)
+    plan = render_plan(root.name, result, flakes, cursed)
+    if args.html:
+        Path(args.html).write_text(render_html(root.name, result, flakes, cursed), encoding="utf-8")
     if args.output:
         Path(args.output).write_text(plan, encoding="utf-8")
     else:
