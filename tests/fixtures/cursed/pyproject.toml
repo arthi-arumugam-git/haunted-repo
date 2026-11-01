@@ -1,0 +1,4 @@
+[project]
+name = "cursed"
+version = "0"
+dependencies = ["PyYAML==5.3", "click>=8", "attrs==23.1.0,<24"]
