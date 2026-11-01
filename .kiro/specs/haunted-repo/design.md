@@ -5,7 +5,7 @@
 - `haunted/flakes` – runs `pytest -p randomly` N times, diffs per-test outcomes.
 - `haunted/deps` – reads requirements/pyproject, batches OSV `/v1/querybatch`.
 - `haunted/planner` – merges findings into a ranked markdown plan.
-- `web/` – graveyard UI: tombstones for zombies, ghosts for poltergeists.
+- `haunted/web.py` – graveyard UI (static HTML via `scan --html`): tombstones for zombies, ghosts for poltergeists.
 
 ## Data flow
 scan(path) -> analyzer + flakes + deps -> Findings -> planner -> RESURRECTION_PLAN.md (+ optional fork PR)
