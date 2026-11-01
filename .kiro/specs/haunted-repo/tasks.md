@@ -7,5 +7,5 @@
 - [x] 6. Planner markdown output (Req 4.1)
 - [x] 7. CLI `python -m haunted scan <path>`
 - [x] 8. Graveyard web UI
-- [ ] 9. Fork PR flow via GitHub MCP (Req 4.2)
+- [x] 9. Fork PR flow via gh CLI (Req 4.2)
 - [ ] 10. Demo on mbianchidev/corn-test and box/flaky; 3-min video
