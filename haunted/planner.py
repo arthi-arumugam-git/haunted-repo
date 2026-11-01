@@ -5,9 +5,10 @@ from haunted.analyzer import ScanResult
 
 # Lower effort first: a skipped (unparseable) file blocks every other check,
 # so it ranks above dead code.
-def render_plan(repo: str, result: ScanResult) -> str:
+def render_plan(repo: str, result: ScanResult, poltergeists: list[str] | None = None) -> str:
+    poltergeists = poltergeists or []
     lines = [f"# Resurrection plan for `{repo}`", ""]
-    if not result.skipped and not result.zombies:
+    if not result.skipped and not result.zombies and not poltergeists:
         lines.append("No findings. This repo is resting peacefully.")
         return "\n".join(lines) + "\n"
     step = 1
@@ -15,6 +16,12 @@ def render_plan(repo: str, result: ScanResult) -> str:
         lines += ["## Fix first: files that do not parse", ""]
         for path, why in sorted(result.skipped.items()):
             lines.append(f"{step}. `{path}`: {why}. Risk high, effort low.")
+            step += 1
+        lines.append("")
+    if poltergeists:
+        lines += ["## Next: tests whose result changes with run order", ""]
+        for t in poltergeists:
+            lines.append(f"{step}. `{t}` passed in some shuffled runs and failed in others. Risk high, effort medium.")
             step += 1
         lines.append("")
     if result.zombies:

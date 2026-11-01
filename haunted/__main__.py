@@ -6,6 +6,7 @@ import sys
 from pathlib import Path
 
 from haunted.analyzer import scan
+from haunted.flake import hunt
 from haunted.planner import render_plan
 
 
@@ -15,12 +16,14 @@ def main(argv: list[str] | None = None) -> int:
     sp = sub.add_parser("scan", help="scan a Python repo and print a resurrection plan")
     sp.add_argument("path")
     sp.add_argument("-o", "--output", help="write the plan to this file")
+    sp.add_argument("--flaky-runs", type=int, default=0, help="rerun the test suite N times in shuffled order (0 = skip)")
     args = ap.parse_args(argv)
     root = Path(args.path)
     if not root.is_dir():
         print(f"not a directory: {root}", file=sys.stderr)
         return 2
-    plan = render_plan(root.name, scan(root))
+    flakes = hunt(root, runs=args.flaky_runs).poltergeists if args.flaky_runs > 0 else []
+    plan = render_plan(root.name, scan(root), flakes)
     if args.output:
         Path(args.output).write_text(plan, encoding="utf-8")
     else:

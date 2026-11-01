@@ -2,7 +2,7 @@
 - [x] 1. Scaffold repo, MIT license, steering docs, hooks
 - [x] 2. Analyzer: collect definitions and references with ast (Req 1.1–1.4)
 - [x] 3. Analyzer fixture tests with known zombies
-- [ ] 4. Flake runner with repeat + random order (Req 2)
+- [x] 4. Flake runner with repeat + random order (Req 2)
 - [ ] 5. OSV dependency audit (Req 3)
 - [x] 6. Planner markdown output (Req 4.1)
 - [x] 7. CLI `python -m haunted scan <path>`
