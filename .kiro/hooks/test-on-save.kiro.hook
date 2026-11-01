@@ -1,0 +1,3 @@
+{"enabled": true, "name": "Run module tests on save", "description": "When a haunted/ Python file is saved, run the matching tests.", "version": "1",
+ "when": {"type": "fileEdited", "patterns": ["haunted/**/*.py"]},
+ "then": {"type": "askAgent", "prompt": "Run pytest for the tests covering the edited module and report failures."}}

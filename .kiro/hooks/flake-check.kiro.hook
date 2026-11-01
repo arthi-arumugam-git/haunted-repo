@@ -1,0 +1,3 @@
+{"enabled": true, "name": "Flake check changed tests", "description": "When a test file changes, rerun it 3 times in random order.", "version": "1",
+ "when": {"type": "fileEdited", "patterns": ["tests/**/*.py"]},
+ "then": {"type": "askAgent", "prompt": "Rerun the edited test file 3 times with pytest -p randomly and list any test whose outcome changed."}}

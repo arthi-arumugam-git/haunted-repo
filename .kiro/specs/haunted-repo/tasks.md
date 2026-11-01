@@ -1,0 +1,11 @@
+# Implementation tasks
+- [x] 1. Scaffold repo, MIT license, steering docs, hooks
+- [x] 2. Analyzer: collect definitions and references with ast (Req 1.1–1.4)
+- [x] 3. Analyzer fixture tests with known zombies
+- [ ] 4. Flake runner with repeat + random order (Req 2)
+- [ ] 5. OSV dependency audit (Req 3)
+- [ ] 6. Planner markdown output (Req 4.1)
+- [ ] 7. CLI `haunted scan <path>`
+- [ ] 8. Graveyard web UI
+- [ ] 9. Fork PR flow via GitHub MCP (Req 4.2)
+- [ ] 10. Demo on mbianchidev/corn-test and box/flaky; 3-min video
