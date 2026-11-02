@@ -38,6 +38,26 @@ def _exported(tree: ast.Module) -> set[str]:
     return names
 
 
+def _dotted_tail(expr: ast.expr) -> str | None:
+    if isinstance(expr, ast.Call):
+        expr = expr.func
+    if isinstance(expr, ast.Attribute):
+        return expr.attr
+    if isinstance(expr, ast.Name):
+        return expr.id
+    return None
+
+
+def _runner_invoked(node: ast.stmt) -> bool:
+    if isinstance(node, ast.ClassDef):
+        return node.name.startswith("Test") or any(
+            (_dotted_tail(b) or "").endswith("TestCase") for b in node.bases
+        )
+    return node.name.startswith(("test", "pytest_")) or any(
+        _dotted_tail(d) == "fixture" for d in node.decorator_list
+    )
+
+
 def scan(root: str | Path) -> ScanResult:
     root = Path(root)
     result = ScanResult()
@@ -53,7 +73,7 @@ def scan(root: str | Path) -> ScanResult:
             continue
         exported |= _exported(tree)
         for node in tree.body:
-            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) and not _runner_invoked(node):
                 kind = "class" if isinstance(node, ast.ClassDef) else "function"
                 defs.append(Zombie(rel, node.name, kind, node.lineno))
         for node in ast.walk(tree):
@@ -66,7 +86,7 @@ def scan(root: str | Path) -> ScanResult:
                 if node.asname:
                     refs.add(node.asname)
     for d in defs:
-        if d.name.startswith("__") or d.name.startswith("test") or d.name in exported or d.name in refs:
+        if d.name.startswith("__") or d.name in exported or d.name in refs:
             continue
         result.zombies.append(d)
     return result
